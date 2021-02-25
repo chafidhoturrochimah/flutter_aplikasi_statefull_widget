@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_aplikasi_statefull_widget/convert.dart';
-import 'package:flutter_aplikasi_statefull_widget/input.dart';
-import 'package:flutter_aplikasi_statefull_widget/result.dart';
+import 'convert.dart';
+import 'input.dart';
+import 'result.dart';
 
 void main() {
   runApp(MyApp());
@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
                           Text('Suhu dalam Kelvin',
                           style: TextStyle(height: 1.5)
                           ),
-                          Text('$_kelvin'),
+                          Text('$_kelvin', style: TextStyle(height: 1.5, fontSize:25),),
                         ],
                       ),
 
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
                           Text('Suhu dalam Reamur',
                           style: TextStyle(height: 1.5)
                           ),
-                          Text('$_reamur'),
+                          Text('$_reamur', style: TextStyle(height: 1.5, fontSize:25),),
                         ],
                       ),
                     ],
@@ -94,10 +94,7 @@ class _MyAppState extends State<MyApp> {
                       child: const Text('Konversi Suhu'),
                     )
                   ),
-                ),
-                Input(etInput: etInput),
-                Result(kelvin: _kelvin, reamur: _reamur),
-                Convert(konvertHandler: _konversiSuhu), 
+                ), 
               ],
             ),
           ),
