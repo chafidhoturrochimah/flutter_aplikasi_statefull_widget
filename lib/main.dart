@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_aplikasi_statefull_widget/convert.dart';
+import 'package:flutter_aplikasi_statefull_widget/input.dart';
+import 'package:flutter_aplikasi_statefull_widget/result.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  //controller
+  TextEditingController etInput = new TextEditingController();
+
+  //variabel berubah
+  double _inputUser = 0;
+  double _kelvin = 0;
+  double _reamur = 0;
+
+  void _konversiSuhu(){
+    setState(() {
+      _inputUser = double.parse(etInput.text);
+      _kelvin = _inputUser + 273;
+      _reamur = _inputUser * (4/5);
+    });
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -24,14 +48,10 @@ class MyApp extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
+                  decoration: InputDecoration(hintText: "Masukkan Suhu Dalam Celcius"),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  controller: etInput,
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    // ignore: deprecated_member_use
-                    WhitelistingTextInputFormatter.digitsOnly
-                  ],//Only numbers can be entered
-                  decoration: InputDecoration(
-                    hintText: 'Masukkan Suhu Dalam Celcius',
-                  ),
                 ),
 
                 Expanded(
@@ -44,7 +64,7 @@ class MyApp extends StatelessWidget {
                           Text('Suhu dalam Kelvin',
                           style: TextStyle(height: 1.5)
                           ),
-                          //Text('$_kelvin', style: TextStyle(fontSize: 20)),
+                          Text('$_kelvin'),
                         ],
                       ),
 
@@ -54,7 +74,7 @@ class MyApp extends StatelessWidget {
                           Text('Suhu dalam Reamur',
                           style: TextStyle(height: 1.5)
                           ),
-                          //Text('$_reamur', style: TextStyle(fontSize: 20)),
+                          Text('$_reamur'),
                         ],
                       ),
                     ],
@@ -67,18 +87,21 @@ class MyApp extends StatelessWidget {
                   child: (
                     // ignore: deprecated_member_use
                     RaisedButton(
-                      onPressed: (){},
+                      onPressed: _konversiSuhu,
                       color: Colors.blue,
                       hoverColor: Colors.blueGrey,
                       textColor: Colors.white,
                       child: const Text('Konversi Suhu'),
                     )
                   ),
-                )  
-            ],
+                ),
+                Input(etInput: etInput),
+                Result(kelvin: _kelvin, reamur: _reamur),
+                Convert(konvertHandler: _konversiSuhu), 
+              ],
+            ),
           ),
-        ),
-      )
-    );
+        )
+      );
   }
 }
